@@ -2,7 +2,7 @@ const gameBoard = document.querySelector("#gameboard");
 const infoDisplay = document.querySelector("#info");
 let go = "circle"
 infoDisplay.textContent = "circle goes first"
-
+const restartGame = document.querySelector("#restart")
 const startCells = [
 	"", "", "","", "", "","", "", ""
 	]
@@ -18,6 +18,16 @@ function createBoard() {
 }
 
 createBoard();
+restartGame.addEventListener("click", clearBoard);
+
+function clearBoard() {
+	const allSquares = document.querySelectorAll(".square");
+	const children = document.querySelectorAll(".square div");
+	children.forEach(child => child.parentNode.removeChild(child));
+	allSquares.forEach(square => square.addEventListener("click", addGo))
+		console.log('done');
+
+}
 
 function addGo(e) {
 	const goDisplay = document.createElement('div');
@@ -34,6 +44,7 @@ function addGo(e) {
 function checkScore() {
 	const allSquares = document.querySelectorAll(".square");
 
+
 	const winningCombos = [
 		[0,1,2], [3,4,5], [6,7,8],
 		[0,3,6], [1,4,7], [2,5,8],
@@ -46,7 +57,7 @@ function checkScore() {
 	
 	if (circleWins) {
 		infoDisplay.textContent = "Circle Wins!";
-		allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
+		
 		return 
 	}
 	})
@@ -56,10 +67,8 @@ function checkScore() {
 			allSquares[cell].firstChild?.classList.contains('cross'))
 	if (crossWins) {
 		infoDisplay.textContent = "Cross Wins!";
-		allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
+		
 		return 
 	}
 	})
-
-
 }
